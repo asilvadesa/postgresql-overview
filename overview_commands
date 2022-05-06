@@ -1,0 +1,11 @@
+SELECT * FROM city;
+SELECT first_name, last_name FROM actor;
+
+SELECT first_name, last_name, email FROM customer;
+
+SELECT * FROM film;
+SELECT DISTINCT(rental_rate) FROM film;
+SELECT DISTINCT(rating) FROM film;
+
+SELECT COUNT(amount) FROM payment;
+SELECT COUNT(DISTINCT amount) FROM payment;
