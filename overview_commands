@@ -21,3 +21,124 @@ SELECT COUNT(*) FROM film
 SELECT email FROM customer 
     WHERE first_name = 'Nancy' 
     AND last_name = 'Thomas';
+
+SELECT * FROM payment;
+
+SELECT customer_id, SUM(amount) FROM payment
+	GROUP BY customer_id
+	ORDER BY SUM(amount) DESC;
+	
+	
+SELECT customer_id, staff_id, SUM(amount) FROM payment
+	GROUP BY customer_id, staff_id
+	ORDER BY customer_id;
+	
+	
+SELECT staff_id, COUNT(amount) FROM payment
+	GROUP BY staff_id
+	ORDER BY COUNT(amount) DESC;
+	
+SELECT rating, ROUND(AVG(replacement_cost),2) 
+	FROM film
+	GROUP BY rating;
+	
+	
+SELECT customer_id, SUM(amount) 
+	FROM payment
+	GROUP BY customer_id
+	ORDER BY SUM(amount) DESC
+	LIMIT 5;
+	
+	
+SELECT customer_id, SUM(amount) 
+	FROM payment
+	GROUP BY customer_id
+	HAVING SUM(amount) < 200
+	ORDER BY SUM(amount) DESC
+	LIMIT 5;
+	
+	
+SELECT customer_id, COUNT(*) 
+	FROM payment
+	GROUP BY customer_id
+	HAVING COUNT(*) >= 40
+	ORDER BY SUM(amount) DESC;
+	
+	
+SELECT customer_id, SUM(amount)
+	FROM payment
+	WHERE staff_id IN (2)
+	GROUP BY customer_id, staff_id
+	HAVING SUM(amount) > 100;
+	
+SELECT customer_id, SUM(amount)
+	FROM payment
+	WHERE staff_id IN (2)
+	GROUP BY customer_id, staff_id
+	HAVING SUM(amount) >= 110
+	ORDER BY SUM(amount) DESC;
+	
+SELECT * FROM film;
+	
+SELECT COUNT(*) FROM film
+	WHERE title LIKE 'J%';
+	
+	
+SELECT first_name, last_name FROM customer
+	WHERE first_name LIKE 'E%'
+	AND address_id < 500
+	ORDER BY customer_id DESC
+	LIMIT 1;
+	
+SELECT * FROM customer;
+
+SELECT * FROM payment AS p
+	INNER JOIN customer as c 
+	ON p.customer_id = c.customer_id;
+	
+
+SELECT * FROM payment AS p
+	LEFT OUTER JOIN customer as c 
+	ON p.customer_id = c.customer_id;
+	
+	
+--------------------------------------------------------------------
+
+SELECT * FROM customer;
+SELECT * FROM address;
+
+
+SELECT email FROM customer c
+	INNER JOIN address a
+	ON c.address_id = a.address_id
+	WHERE a.district = 'California';
+	
+--------------------------------------------------------------------
+
+SELECT * FROM film;
+SELECT * FROM film_actor;
+SELECT * FROM actor;
+
+SELECT f.title, ac.first_name, ac.last_name FROM film f
+	INNER JOIN film_actor fa ON f.film_id = fa.film_id
+	INNER JOIN actor ac ON ac.actor_id = fa.actor_id
+	WHERE ac.first_name = 'Nick' AND ac.last_name = 'Wahlberg';
+	
+--------------------------------------------------------------------
+	
+SELECT DATE(payment_date), COUNT(*) FROM payment
+	GROUP BY DATE(payment_date);
+	
+SELECT TO_CHAR(payment_date, 'Day'), COUNT(*) FROM payment
+	WHERE  TO_CHAR(payment_date, 'Day') LIKE '%Monday%'
+	GROUP BY TO_CHAR(payment_date, 'Day');
+
+SELECT DISTINCT(TO_CHAR(payment_date, 'Month')) FROM payment;
+	
+SELECT COUNT(*) FROM payment
+WHERE EXTRACT(dow FROM payment_date) = 1;
+
+
+SELECT EXTRACT(dow FROM payment_date) FROM payment
+	WHERE ;
+	
